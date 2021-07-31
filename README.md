@@ -1,6 +1,6 @@
-# HIRE-TIDDLE
+# HIRE-TRIBBLE
 
-Hire-Tiddle is a management tool to handle the recruiting process for people handeling recruiting.
+HIRE-TRIBBLE is a management tool to handle the recruiting process for people handeling recruiting.
 This App allows the user to look and organise the candidates on different criteria.
 
 # REQUIREMENTS:
@@ -28,13 +28,13 @@ Deployment : Netlify
 
 # LIVE SITE 
 
-You can have a look at the site live here. [HIRE-TIDDLE](https://hire-tiddle.netlify.app/)
+You can have a look at the site live here. [HIRE-TRIBBLE](https://hire-tiddle.netlify.app/)
 
 
 
 # Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [Create React App](https://hire-tribble.netlify.app/).
 
 ## Available Scripts
 
