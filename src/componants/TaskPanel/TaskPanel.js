@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from "react-redux";
 import PanelItem from "../PanelItem/PanelItem";
 import panelItems from "../../constants/panelItems";
 import { pushColumns } from "../../store/task-panel.slice";
-import "./TaskPanel.css";
 
 function TaskPanel() {
   const { itemsFromBackend, columns } = useSelector((state) => state.taskPanel);
