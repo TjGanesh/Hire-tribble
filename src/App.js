@@ -1,12 +1,24 @@
-import './App.css';
+import "./App.css";
+import TaskPanel from "./componants/TaskPanel/TaskPanel";
+import Landing from "./componants/Header/Header";
+import ProContainer from "./componants/Profile/ProContainer";
+import { store } from "./store";
+import { Provider } from "react-redux";
+import PanelItem from "./componants/PanelItem/PanelItem";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        This is the basic rendered App.
-      </header>
-    </div>
+    <Provider store={store}>
+      <div className="App">
+        <Landing />
+        <ProContainer />
+        <br />
+        <br />
+        <br />
+        <TaskPanel />
+        <PanelItem />
+      </div>
+    </Provider>
   );
 }
 
