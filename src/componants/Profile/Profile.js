@@ -3,15 +3,14 @@ import "./Profile.css";
 import { v4 as uuid } from "uuid";
 import { useDispatch } from "react-redux";
 import { pushTasksList } from "../../store/task-panel.slice";
+import taskItems from "../../constants/panelItems";
 
-const itemsFromBackend = [
-  { id: uuid(), content: "First task" },
-  { id: uuid(), content: "Second task" },
-  { id: uuid(), content: "Third task" },
-  { id: uuid(), content: "Fourth task" },
-  { id: uuid(), content: "Fifth task" },
-];
-
+const itemsFromBackend = taskItems.map(taskItem=>{
+  return {
+    id:uuid(),
+    content:taskItem
+  }
+})
 function Profile({ Name }) {
   const dispatch = useDispatch();
   const dispatchItemNameHandler = () => {

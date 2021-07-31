@@ -4,7 +4,6 @@ import Landing from "./componants/Header/Header";
 import ProContainer from "./componants/Profile/ProContainer";
 import { store } from "./store";
 import { Provider } from "react-redux";
-import PanelItem from "./componants/PanelItem/PanelItem";
 
 function App() {
   return (
@@ -16,7 +15,6 @@ function App() {
         <br />
         <br />
         <TaskPanel />
-        <PanelItem />
       </div>
     </Provider>
   );

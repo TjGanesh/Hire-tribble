@@ -1,78 +1,115 @@
 import React, { useState, useEffect } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { v4 as uuid } from "uuid";
-import { useSelector } from "react-redux";
-
-const onDragEnd = (result, columns, setColumns) => {
-  if (!result.destination) return;
-  const { source, destination } = result;
-
-  if (source.droppableId !== destination.droppableId) {
-    const sourceColumn = columns[source.droppableId];
-    const destColumn = columns[destination.droppableId];
-    const sourceItems = [...sourceColumn.items];
-    const destItems = [...destColumn.items];
-    const [removed] = sourceItems.splice(source.index, 1);
-    destItems.splice(destination.index, 0, removed);
-    setColumns({
-      ...columns,
-      [source.droppableId]: {
-        ...sourceColumn,
-        items: sourceItems,
-      },
-      [destination.droppableId]: {
-        ...destColumn,
-        items: destItems,
-      },
-    });
-  } else {
-    const column = columns[source.droppableId];
-    const copiedItems = [...column.items];
-    const [removed] = copiedItems.splice(source.index, 1);
-    copiedItems.splice(destination.index, 0, removed);
-    setColumns({
-      ...columns,
-      [source.droppableId]: {
-        ...column,
-        items: copiedItems,
-      },
-    });
-  }
-};
+import { useSelector, useDispatch } from "react-redux";
+import PanelItem from "../PanelItem/PanelItem";
+import panelItems from "../../constants/panelItems";
+import { pushColumns } from "../../store/task-panel.slice";
 
 function TaskPanel() {
-  const { itemsFromBackend } = useSelector((state) => state.taskPanel);
-  const [columns, setColumns] = useState({});
+  const { itemsFromBackend, columns } = useSelector(state => state.taskPanel);
+  const [items, setItems] = useState([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (itemsFromBackend && itemsFromBackend.length) {
       const columnsFromBackend = {
         [uuid()]: {
           name: "Requested",
-          items: itemsFromBackend,
+          items: items.length ? items : itemsFromBackend
         },
         [uuid()]: {
           name: "To do",
-          items: [],
+          items: []
         },
         [uuid()]: {
           name: "In Progress",
-          items: [],
+          items: []
         },
         [uuid()]: {
           name: "Done",
-          items: [],
-        },
+          items: []
+        }
       };
-      setColumns(columnsFromBackend);
+      dispatch(pushColumns(columnsFromBackend));
     }
-  }, [itemsFromBackend]);
+  }, [items, itemsFromBackend]);
 
+  const onDragEnd = (result, columns, dispatch) => {
+    if (!result.destination) return;
+    const { source, destination } = result;
+
+    if (source.droppableId !== destination.droppableId) {
+      const sourceColumn = columns[source.droppableId];
+      const destColumn = columns[destination.droppableId];
+      const sourceItems = [...sourceColumn.items];
+      const destItems = [...destColumn.items];
+      const [removed] = sourceItems.splice(source.index, 1);
+      destItems.splice(destination.index, 0, removed);
+      dispatch(
+        pushColumns({
+          ...columns,
+          [source.droppableId]: {
+            ...sourceColumn,
+            items: sourceItems
+          },
+          [destination.droppableId]: {
+            ...destColumn,
+            items: destItems
+          }
+        })
+      );
+    } else {
+      const column = columns[source.droppableId];
+      const copiedItems = [...column.items];
+      const [removed] = copiedItems.splice(source.index, 1);
+      copiedItems.splice(destination.index, 0, removed);
+      dispatch(
+        pushColumns({
+          ...columns,
+          [source.droppableId]: {
+            ...column,
+            items: copiedItems
+          }
+        })
+      );
+    }
+  };
+
+  const onSelectPositionHandler = event => {
+    if (event.target.value === "All") {
+      setItems(itemsFromBackend);
+    } else {
+      let selectedItems = itemsFromBackend.filter(
+        itemFromBackend =>
+          itemFromBackend.content.position === event.target.value
+      );
+      setItems(selectedItems);
+    }
+  };
   return (
-    <div style={{ display: "flex", justifyContent: "center", height: "100%" }}>
+    <>
       {Object.keys(columns).length > 0 && (
+        <select
+          onChange={onSelectPositionHandler}
+          className="form-select"
+          aria-label="Default select example"
+        >
+          <option value={"All"}>All</option>
+          {[...new Set(panelItems.map(item => item.position))].map(
+            (position, index) => (
+              <option key={index} value={position}>
+                {position}
+              </option>
+            )
+          )}
+        </select>
+      )}
+      <div
+        style={{ display: "flex", justifyContent: "center", height: "100%" }}
+      >
         <DragDropContext
-          onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
+          onDragEnd={result => onDragEnd(result, columns, dispatch)}
         >
           {Object.entries(columns).map(([columnId, column], index) => {
             return (
@@ -80,7 +117,7 @@ function TaskPanel() {
                 style={{
                   display: "flex",
                   flexDirection: "column",
-                  alignItems: "center",
+                  alignItems: "center"
                 }}
                 key={columnId}
               >
@@ -98,7 +135,7 @@ function TaskPanel() {
                               : "lightgrey",
                             padding: 4,
                             width: 250,
-                            minHeight: 500,
+                            minHeight: 500
                           }}
                         >
                           {column.items.map((item, index) => {
@@ -114,19 +151,14 @@ function TaskPanel() {
                                       ref={provided.innerRef}
                                       {...provided.draggableProps}
                                       {...provided.dragHandleProps}
-                                      style={{
-                                        userSelect: "none",
-                                        padding: 16,
-                                        margin: "0 0 8px 0",
-                                        minHeight: "50px",
-                                        backgroundColor: snapshot.isDragging
-                                          ? "#263B4A"
-                                          : "#456C86",
-                                        color: "white",
-                                        ...provided.draggableProps.style,
-                                      }}
                                     >
-                                      {item.content}
+                                      <PanelItem
+                                        position={item.content.position}
+                                        description={item.content.description}
+                                        candidateName={
+                                          item.content.candidateName
+                                        }
+                                      />
                                     </div>
                                   );
                                 }}
@@ -143,8 +175,8 @@ function TaskPanel() {
             );
           })}
         </DragDropContext>
-      )}
-    </div>
+      </div>
+    </>
   );
 }
 
