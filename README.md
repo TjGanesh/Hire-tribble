@@ -1,3 +1,37 @@
+# HIRE-TIDDLE
+
+Hire-Tiddle is a management tool to handle the recruiting process for people handeling recruiting.
+This App allows the user to look and organise the candidates on different criteria.
+
+# REQUIREMENTS:
+Because the kanban board will span various companies and roles, the ability to filter the overall data is important. Namely, your implementation should support the following:
+
+ 1.User should be able to filter by company\
+ 2.User should be able to filter by role\
+ 3.User should have the Ability to toggle between table view and kanban view\
+ 4.User should have the Ability to add notes for a particular candidate\
+ 
+# TECH STACK:
+
+Programming Language: JavaScript\
+Front end : React, HTML ,CSS\
+Back end : Node Js, Express \
+Deployment : Netlify
+
+
+# GOOD TO HAVE:
+
+1.Analytics page tracking all updates made to the kanban board\
+2.Ability to upload files\
+3.Ability to add additional interview stages for specific companies
+
+
+# LIVE SITE 
+
+You can have a look at the site live here. [HIRE-TIDDLE](https://hire-tiddle.netlify.app/)
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
