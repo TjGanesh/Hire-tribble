@@ -12,10 +12,12 @@ const companyNames = [
 function ProContainer() {
   return (
     <>
-      <div className="pro-container">
-        {companyNames.map((current) => {
-          return <Profile key={current} Name={current} />;
-        })}
+      <div className="container">
+        <div className="pro-container">
+          {companyNames.map((current) => {
+            return <Profile key={current} Name={current} />;
+          })}
+        </div>
       </div>
     </>
   );

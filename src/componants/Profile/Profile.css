@@ -8,8 +8,7 @@
   margin: calc(20vh - 30px) 48px 0 48px;
   box-shadow: 10px -10px 0 -3px var(--background), 10px -10px var(--green),
     20px -20px 0 -3px var(--background), 20px -20px var(--yellow),
-    30px -30px 0 -3px var(--background), 30px -30px var(--orange),
-    40px -40px 0 -3px var(--background), 40px -40px var(--red);
+    30px -30px 0 -3px var(--background), 30px -30px var(--red);
   transition: box-shadow 0.2s, top 0.2s, left 0.2s;
   position: relative;
   top: 0;
@@ -40,16 +39,6 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-}
-
-body {
-  background-image: radial-gradient(
-    var(--secondary) 30%,
-    var(--background) 30%
-  );
-  background-size: 2px 3px;
-  font-family: "Archivo", sans-serif;
-  color: var(--primary);
 }
 
 .card-profile p {

@@ -5,12 +5,12 @@ import { useDispatch } from "react-redux";
 import { pushTasksList } from "../../store/task-panel.slice";
 import taskItems from "../../constants/panelItems";
 
-const itemsFromBackend = taskItems.map(taskItem=>{
+const itemsFromBackend = taskItems.map((taskItem) => {
   return {
-    id:uuid(),
-    content:taskItem
-  }
-})
+    id: uuid(),
+    content: taskItem,
+  };
+});
 function Profile({ Name }) {
   const dispatch = useDispatch();
   const dispatchItemNameHandler = () => {

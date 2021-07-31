@@ -1,5 +1,13 @@
 .pro-container {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
+  height: 70vh;
+  width: 90vw;
+  margin: 0px;
+}
+
+.container {
+  margin: 3rem auto 3rem auto;
 }
