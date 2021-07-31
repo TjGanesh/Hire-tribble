@@ -28,7 +28,7 @@ Deployment : Netlify
 
 # LIVE SITE 
 
-You can have a look at the site live here. [HIRE-TRIBBLE](https://hire-tiddle.netlify.app/)
+You can have a look at the site live here. [HIRE-TRIBBLE](https://hire-tribble.netlify.app/)
 
 
 
