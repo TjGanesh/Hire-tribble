@@ -1,6 +1,6 @@
 import "./App.css";
 import TaskPanel from "./componants/TaskPanel/TaskPanel";
-import Landing from "./componants/Header/Header";
+import Header from "./componants/Header/Header";
 import ProContainer from "./componants/Profile/ProContainer";
 import { store } from "./store";
 import { Provider } from "react-redux";
@@ -9,7 +9,7 @@ function App() {
   return (
     <Provider store={store}>
       <div className="App">
-        <Landing />
+        <Header />
         <ProContainer />
         <div className="scroll-down"></div>
         <br></br>
