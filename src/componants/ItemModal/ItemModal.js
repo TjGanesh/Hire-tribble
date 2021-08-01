@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 const ItemModal = ({ showModal, title, description, emitClose, children }) => {
-    const [areatext,setAreatext] = useState("");
-    const [displayArray,setDisplayArray] = useState([]);
+  const [areatext, setAreatext] = useState("");
+  const [displayArray, setDisplayArray] = useState([]);
   return (
     <Modal show={showModal} onHide={emitClose}>
       <Modal.Header closeButton>
@@ -12,14 +12,16 @@ const ItemModal = ({ showModal, title, description, emitClose, children }) => {
         <div>
           <div>{children}</div>
           <div className="my-3">{description}</div>
-          {displayArray.map(item=><div>{item}</div>)}
+          {displayArray.map((item) => (
+            <div>{item}</div>
+          ))}
           <textarea
-            onChange={event => {
+            onChange={(event) => {
               setAreatext(event.target.value);
             }}
             value={areatext}
-            class="form-control"
-            id="exampleFormControlTextarea1"
+            className="form-control"
+            id="Textarea1"
             rows="3"
           ></textarea>
         </div>

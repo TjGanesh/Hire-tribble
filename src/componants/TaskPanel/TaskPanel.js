@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import PanelItem from "../PanelItem/PanelItem";
 import panelItems from "../../constants/panelItems";
 import { pushColumns } from "../../store/task-panel.slice";
+// import "./TaskPanel.css";
 
 function TaskPanel() {
   const { itemsFromBackend, columns } = useSelector((state) => state.taskPanel);
@@ -95,10 +96,10 @@ function TaskPanel() {
     <>
       <div className="task-panel-container">
         {Object.keys(columns).length > 0 && (
-          <div className="select-container">
+          <div className="select-container container">
             <select
               onChange={onSelectPositionHandler}
-              className="form-select"
+              className="form-select ml-auto"
               aria-label="Default select example"
               style={{ width: "15vw", marginRight: "3.3rem" }}
             >

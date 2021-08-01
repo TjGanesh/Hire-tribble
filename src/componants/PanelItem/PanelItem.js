@@ -4,7 +4,7 @@ import ItemModal from "../ItemModal/ItemModal";
 import { HiOutlineViewGridAdd } from "react-icons/hi";
 const PanelItem = ({ position, candidateName, description }) => {
   const [showModal, setShowModal] = useState(false);
-  const getClass = position => {
+  const getClass = (position) => {
     switch (position) {
       case "Front End":
         return "primary";
@@ -21,7 +21,9 @@ const PanelItem = ({ position, candidateName, description }) => {
     }
   };
 
-  const badge = ()=> <span className={`badge bg-${getClass(position)}`}>{position}</span>;
+  const badge = () => (
+    <span className={`badge bg-${getClass(position)}`}>{position}</span>
+  );
 
   return (
     <>
@@ -42,9 +44,9 @@ const PanelItem = ({ position, candidateName, description }) => {
         </div>
       </div>
       <ItemModal
-      title={candidateName}
-      description={description}
-      position={position}
+        title={candidateName}
+        description={description}
+        position={position}
         showModal={showModal}
         emitClose={() => {
           setShowModal(false);
