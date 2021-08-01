@@ -5,11 +5,12 @@ import { useSelector, useDispatch } from "react-redux";
 import PanelItem from "../PanelItem/PanelItem";
 import panelItems from "../../constants/panelItems";
 import { pushColumns } from "../../store/task-panel.slice";
-// import "./TaskPanel.css";
+import { TableView } from "../TableView/TableView";
 
 function TaskPanel() {
   const { itemsFromBackend, columns } = useSelector((state) => state.taskPanel);
   const [items, setItems] = useState([]);
+  const [isTableView, setIsTableView] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -38,7 +39,7 @@ function TaskPanel() {
       };
       dispatch(pushColumns(columnsFromBackend));
     }
-  }, [items, itemsFromBackend]);
+  }, [items, itemsFromBackend, dispatch]);
 
   const onDragEnd = (result, columns, dispatch) => {
     if (!result.destination) return;
@@ -96,12 +97,34 @@ function TaskPanel() {
     <>
       <div className="task-panel-container">
         {Object.keys(columns).length > 0 && (
-          <div className="select-container container">
+          <div
+            className="select-container container"
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              flexWrap: "wrap",
+              alignContent: "flex-end",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <div className="form-check form-switch">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id="tableViewToggle"
+                onChange={() => setIsTableView(!isTableView)}
+              />
+              <label className="form-check-label" htmlFor="tableViewToggle">
+                {`${isTableView ? "Board" : "Table"} view`}
+              </label>
+            </div>
+
             <select
               onChange={onSelectPositionHandler}
               className="form-select ml-auto"
               aria-label="Default select example"
-              style={{ width: "15vw", marginRight: "3.3rem" }}
+              style={{ width: "15vw" }}
             >
               <option value={"All"}>All</option>
               {[...new Set(panelItems.map((item) => item.position))].map(
@@ -114,77 +137,93 @@ function TaskPanel() {
             </select>
           </div>
         )}
-        <div
-          style={{ display: "flex", justifyContent: "center", height: "100%" }}
-        >
-          <DragDropContext
-            onDragEnd={(result) => onDragEnd(result, columns, dispatch)}
+        {isTableView ? (
+          <TableView
+            columns={columns}
+            items={items.length ? items : itemsFromBackend}
+          />
+        ) : (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              height: "100%",
+            }}
           >
-            {Object.entries(columns).map(([columnId, column], index) => {
-              return (
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
-                  key={columnId}
-                >
-                  <h2>{column.name}</h2>
-                  <div style={{ margin: 8 }}>
-                    <Droppable droppableId={columnId} key={columnId}>
-                      {(provided, snapshot) => {
-                        return (
-                          <div
-                            {...provided.droppableProps}
-                            ref={provided.innerRef}
-                            style={{
-                              background: snapshot.isDraggingOver
-                                ? "lightblue"
-                                : "lightgrey",
-                              padding: 4,
-                              width: 250,
-                              minHeight: 500,
-                            }}
-                          >
-                            {column.items.map((item, index) => {
-                              return (
-                                <Draggable
-                                  key={item.id}
-                                  draggableId={item.id}
-                                  index={index}
-                                >
-                                  {(provided, snapshot) => {
-                                    return (
-                                      <div
-                                        ref={provided.innerRef}
-                                        {...provided.draggableProps}
-                                        {...provided.dragHandleProps}
-                                      >
-                                        <PanelItem
-                                          position={item.content.position}
-                                          description={item.content.description}
-                                          candidateName={
-                                            item.content.candidateName
-                                          }
-                                        />
-                                      </div>
-                                    );
-                                  }}
-                                </Draggable>
-                              );
-                            })}
-                            {provided.placeholder}
-                          </div>
-                        );
-                      }}
-                    </Droppable>
+            <DragDropContext
+              onDragEnd={(result) => onDragEnd(result, columns, dispatch)}
+            >
+              {Object.entries(columns).map(([columnId, column], index) => {
+                return (
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}
+                    key={columnId}
+                  >
+                    <h2>{column.name}</h2>
+                    <div style={{ margin: 8 }}>
+                      <Droppable droppableId={columnId} key={columnId}>
+                        {(provided, snapshot) => {
+                          return (
+                            <div
+                              {...provided.droppableProps}
+                              ref={provided.innerRef}
+                              style={{
+                                background: snapshot.isDraggingOver
+                                  ? "lightblue"
+                                  : "#F5F5D2",
+                                borderRadius: 4,
+                                padding: 4,
+                                width: 255,
+                                minHeight: 500,
+                                border: " 1px black solid",
+                                boxShadow: "5px 05px 15px grey",
+                              }}
+                            >
+                              {column.items.map((item, index) => {
+                                return (
+                                  <Draggable
+                                    key={item.id}
+                                    draggableId={item.id}
+                                    index={index}
+                                  >
+                                    {(provided, snapshot) => {
+                                      return (
+                                        <div
+                                          ref={provided.innerRef}
+                                          {...provided.draggableProps}
+                                          {...provided.dragHandleProps}
+                                        >
+                                          <PanelItem
+                                            position={item.content.position}
+                                            description={
+                                              item.content.description
+                                            }
+                                            candidateName={
+                                              item.content.candidateName
+                                            }
+                                          />
+                                        </div>
+                                      );
+                                    }}
+                                  </Draggable>
+                                );
+                              })}
+                              {provided.placeholder}
+                            </div>
+                          );
+                        }}
+                      </Droppable>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
-          </DragDropContext>
-        </div>
+                );
+              })}
+            </DragDropContext>
+          </div>
+        )}
       </div>
     </>
   );

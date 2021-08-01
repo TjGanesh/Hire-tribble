@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   itemsFromBackend: [],
-  columns:{},
+  columns: {},
 };
 
 export const taskPanel = createSlice({
@@ -12,13 +12,17 @@ export const taskPanel = createSlice({
     pushTasksList: (state, action) => {
       state.itemsFromBackend = action.payload;
     },
-    pushColumns: (state,action) => {
+    pushColumns: (state, action) => {
       state.columns = action.payload;
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { pushTasksList, pushColumns, toggleFirstFetch } = taskPanel.actions;
+export const {
+  pushTasksList,
+  pushColumns,
+  toggleFirstFetch,
+} = taskPanel.actions;
 
 export default taskPanel.reducer;

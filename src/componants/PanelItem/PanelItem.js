@@ -27,7 +27,7 @@ const PanelItem = ({ position, candidateName, description }) => {
 
   return (
     <>
-      <div className="card mb-1">
+      <div className="card mb-1" style={{ boxShadow: "4px 05px 15px grey" }}>
         <div className="card-header bg-light">
           {badge()}
           <span
