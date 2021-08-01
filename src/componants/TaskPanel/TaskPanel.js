@@ -119,9 +119,10 @@ function TaskPanel() {
                 {`${isTableView ? "Board" : "Table"} view`}
               </label>
             </div>
+
             <select
               onChange={onSelectPositionHandler}
-              className="form-select"
+              className="form-select ml-auto"
               aria-label="Default select example"
               style={{ width: "15vw" }}
             >
