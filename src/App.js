@@ -12,8 +12,8 @@ function App() {
         <Header />
         <ProContainer />
         <div className="scroll-down"></div>
-        <br></br>
-        <br></br>
+        <br />
+        <hr />
         <TaskPanel />
       </div>
     </Provider>
